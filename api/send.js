@@ -3,7 +3,7 @@ import fs from "fs";
 
 // توليد Access Token من Service Account
 async function getAccessToken() {
-  const serviceAccount = JSON.parse(fs.readFileSync("serviceAccount.json"));
+  const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT_JSON);
   const jwtClient = new google.auth.JWT(
     serviceAccount.client_email,
     null,
