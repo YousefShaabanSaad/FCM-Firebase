@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 import fs from "fs";
 
-// دالة لتوليد Access Token من Service Account
+// توليد Access Token من Service Account
 async function getAccessToken() {
   const serviceAccount = JSON.parse(fs.readFileSync("serviceAccount.json"));
   const jwtClient = new google.auth.JWT(
@@ -14,28 +14,23 @@ async function getAccessToken() {
   return access_token;
 }
 
-// الدالة الرئيسية التي تتعامل مع الطلبات
+// الدالة الرئيسية
 export default async function handler(req, res) {
   if (req.method !== "POST")
     return res.status(405).json({ msg: "Method Not Allowed" });
 
   const { title, body, target } = req.body;
 
-  // target = "admin" أو "all"
   if (!title || !body || !target)
     return res.status(400).json({ msg: "Missing title, body, or target" });
 
   const accessToken = await getAccessToken();
-
-  const projectId = "YOUR_PROJECT_ID"; // غيّر إلى Project ID بتاعك
+  const projectId = "ganaza-0"; // ضع Project ID الخاص بك
 
   const message = {
     message: {
       topic: target, // "admin" أو "all"
-      notification: {
-        title: title,
-        body: body
-      },
+      notification: { title, body },
       android: { priority: "high" },
       apns: { headers: { "apns-priority": "10" } }
     }
