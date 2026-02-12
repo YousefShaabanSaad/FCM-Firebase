@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const {title, body, topic} = req.body;
 
   const response = await fetch(
-    "https://fcm.googleapis.com/v1/projects/YOUR_PROJECT_ID/messages:send",
+    "https://fcm.googleapis.com/v1/projects/ganaza-0/messages:send",
     {
       method: "POST",
       headers: {
