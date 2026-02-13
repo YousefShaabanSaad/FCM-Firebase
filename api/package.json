@@ -1,0 +1,13 @@
+{
+  "name": "fcm-vercel",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "send.js",
+  "scripts": {
+    "start": "node send.js"
+  },
+  "dependencies": {
+    "googleapis": "^121.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}
