@@ -1,5 +1,5 @@
-const { google } = require("googleapis");
-const fs = require("fs");
+import { google } from "googleapis";
+import fetch from "node-fetch";
 
 // توليد Access Token من Service Account
 async function getAccessToken() {
@@ -24,19 +24,19 @@ export default async function handler(req, res) {
   if (!title || !body || !target)
     return res.status(400).json({ msg: "Missing title, body, or target" });
 
-  const accessToken = await getAccessToken();
-  const projectId = "ganaza-0"; // ضع Project ID الخاص بك
-
-  const message = {
-    message: {
-      topic: target, // "admin" أو "all"
-      notification: { title, body },
-      android: { priority: "high" },
-      apns: { headers: { "apns-priority": "10" } }
-    }
-  };
-
   try {
+    const accessToken = await getAccessToken();
+    const projectId = "ganaza-0"; // ضع Project ID الخاص بك
+
+    const message = {
+      message: {
+        topic: target, // "admin" أو "all"
+        notification: { title, body },
+        android: { priority: "high" },
+        apns: { headers: { "apns-priority": "10" } }
+      }
+    };
+
     const response = await fetch(
       `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
       {
@@ -53,6 +53,7 @@ export default async function handler(req, res) {
     res.status(200).json(data);
 
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
