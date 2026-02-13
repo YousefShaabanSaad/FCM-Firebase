@@ -1,5 +1,5 @@
-import { google } from "googleapis";
-import fs from "fs";
+const { google } = require("googleapis");
+const fs = require("fs");
 
 // توليد Access Token من Service Account
 async function getAccessToken() {
